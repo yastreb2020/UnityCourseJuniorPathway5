@@ -25,6 +25,16 @@ public class Target : MonoBehaviour
         
     }
 
+    private void OnMouseDown()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Destroy(gameObject);
+    }
+
     private Vector3 RandomTorque()
     {
         return new Vector3(Random.Range(-torqueRange, torqueRange), Random.Range(-torqueRange, torqueRange), Random.Range(-torqueRange, torqueRange));
