@@ -11,6 +11,11 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
     public TextMeshProUGUI gameOverText;
+    public AudioClip menuSound;
+    public AudioClip gameSound;
+    public AudioClip goodObjectSound;
+    public AudioClip badObjectSound;
+    public AudioClip buttonSound;
     public GameObject titleScreen;
     public Button restartButton;
     public bool isGameActive;
@@ -20,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
+        gameObject.GetComponent<AudioSource>().PlayOneShot(menuSound);
     }
 
     void Update()
@@ -30,6 +35,10 @@ public class GameManager : MonoBehaviour
 
     public void UpdateScore(int scoreToAdd)
     {
+        if (scoreToAdd > 0)
+            gameObject.GetComponent<AudioSource>().PlayOneShot(goodObjectSound);
+        else if (scoreToAdd < 0)
+            gameObject.GetComponent<AudioSource>().PlayOneShot(badObjectSound);
         score += scoreToAdd;
         scoreText.text = "Score: " + score;
     }
@@ -71,6 +80,9 @@ public class GameManager : MonoBehaviour
 
     public void StartGame(int difficulty)
     {
+        gameObject.GetComponent<AudioSource>().Stop();
+        gameObject.GetComponent<AudioSource>().PlayOneShot(buttonSound);
+        gameObject.GetComponent<AudioSource>().PlayOneShot(gameSound);
         isGameActive = true;
         spawnRate /= difficulty;
         StartCoroutine(SpawnTarget());
