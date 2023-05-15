@@ -11,26 +11,47 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI livesText;
     public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI pausedText;
     public AudioClip menuSound;
     public AudioClip gameSound;
     public AudioClip goodObjectSound;
     public AudioClip badObjectSound;
     public AudioClip buttonSound;
     public GameObject titleScreen;
+    public GameObject pauseScreen;
     public Button restartButton;
     public bool isGameActive;
+    private bool isGamePaused;
     private int score;
     private int lives;
     private float spawnRate = 1.5f;
 
+
     void Start()
     {
         gameObject.GetComponent<AudioSource>().PlayOneShot(menuSound);
+        isGameActive = false;
+        isGamePaused = false;
     }
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space) && isGameActive)
+        {
+            isGamePaused = !isGamePaused;
+            if (!isGamePaused)
+            {
+                pausedText.gameObject.SetActive(true);
+                pauseScreen.SetActive(true) ;
+                Time.timeScale = 0;
+            }
+            else
+            {
+                pausedText.gameObject.SetActive(false);
+                pauseScreen.SetActive(false);
+                Time.timeScale = 1;
+            }
+        }
     }
 
     public void UpdateScore(int scoreToAdd)
