@@ -15,15 +15,5 @@ public class Trailing : MonoBehaviour
     void Update()
     {
         trailEffect.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("mouse down");
-            trailEffect.forceRenderingOff = false;
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            Debug.Log("mouse up");
-            trailEffect.forceRenderingOff = true;
-        }
     }
 }

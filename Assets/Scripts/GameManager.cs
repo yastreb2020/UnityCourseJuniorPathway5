@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public AudioClip buttonSound;
     public GameObject titleScreen;
     public GameObject pauseScreen;
+    public GameObject mouseTrail;
     public Button restartButton;
     public bool isGameActive;
     private bool isGamePaused;
@@ -36,6 +37,17 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("mouse down");
+            mouseTrail.SetActive(true);
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            Debug.Log("mouse up");
+            mouseTrail.SetActive(false);
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && isGameActive)
         {
             isGamePaused = !isGamePaused;

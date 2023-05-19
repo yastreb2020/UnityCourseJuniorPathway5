@@ -31,7 +31,7 @@ public class Target : MonoBehaviour
         
     }
 
-    private void OnMouseDown()
+    /*private void OnMouseDown()
     {
         if (gameManager.isGameActive)
         {
@@ -39,15 +39,21 @@ public class Target : MonoBehaviour
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
             gameManager.UpdateScore(pointValue);
         }
-    }
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
-
-        if (!gameObject.CompareTag("Bad"))
+        if (gameManager.isGameActive)
         {
-            gameManager.UpdateLives();
+            if (other.gameObject.CompareTag("Mouse") && other.gameObject.activeSelf)
+            {
+                Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+                gameManager.UpdateScore(pointValue);
+            } else if (!other.gameObject.CompareTag("Mouse") && !gameObject.CompareTag("Bad"))
+            {
+                gameManager.UpdateLives();
+            }
         }
     }
 
