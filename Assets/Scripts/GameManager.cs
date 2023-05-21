@@ -26,13 +26,16 @@ public class GameManager : MonoBehaviour
     private int score;
     private int lives;
     private float spawnRate = 1.5f;
-
+    
+    private Trailing trailScript;
 
     void Start()
     {
         gameObject.GetComponent<AudioSource>().PlayOneShot(menuSound);
         isGameActive = false;
         isGamePaused = false;
+        
+        trailScript = mouseTrail.GetComponent<Trailing>();
     }
 
     void Update()
@@ -58,7 +61,8 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("mouse down");
                 mouseTrail.SetActive(true);
-                mouseTrail.GetComponent<Trailing>().OnActive();
+                trailScript.OnActive();
+                //mouseTrail.GetComponent<Trailing>().OnActive();
             } else if (Input.GetMouseButtonUp(0))
             {
                 Debug.Log("mouse up");
@@ -116,7 +120,9 @@ public class GameManager : MonoBehaviour
     {
         gameObject.GetComponent<AudioSource>().Stop();
         gameObject.GetComponent<AudioSource>().PlayOneShot(buttonSound);
-        gameObject.GetComponent<AudioSource>().PlayOneShot(gameSound);
+        // make gameSound the clip for AudioSource component, so that it loops
+        gameObject.GetComponent<AudioSource>().clip = gameSound;
+        gameObject.GetComponent<AudioSource>().Play();
         isGameActive = true;
         spawnRate /= difficulty;
         StartCoroutine(SpawnTarget());
