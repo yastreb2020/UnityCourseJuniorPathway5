@@ -9,6 +9,7 @@ public class Trailing : MonoBehaviour
     void Start()
     {
         trailEffect = GetComponent<TrailRenderer>();
+        trailEffect.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     // Update is called once per frame
@@ -16,4 +17,18 @@ public class Trailing : MonoBehaviour
     {
         trailEffect.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
+
+    public void OnActive()
+    {
+        trailEffect.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        StartCoroutine(Countdown());
+    }
+
+    private IEnumerator Countdown()
+    {
+        yield return new WaitForSeconds(1);
+        gameObject.SetActive(false);
+    }
+
+
 }

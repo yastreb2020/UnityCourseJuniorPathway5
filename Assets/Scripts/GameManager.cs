@@ -37,31 +37,32 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (isGameActive)
         {
-            Debug.Log("mouse down");
-            mouseTrail.SetActive(true);
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            Debug.Log("mouse up");
-            mouseTrail.SetActive(false);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && isGameActive)
-        {
-            isGamePaused = !isGamePaused;
-            if (!isGamePaused)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                pausedText.gameObject.SetActive(true);
-                pauseScreen.SetActive(true) ;
-                Time.timeScale = 0;
-            }
-            else
+                isGamePaused = !isGamePaused;
+                if (!isGamePaused)
+                {
+                    pausedText.gameObject.SetActive(true);
+                    pauseScreen.SetActive(true);
+                    Time.timeScale = 0;
+                }
+                else
+                {
+                    pausedText.gameObject.SetActive(false);
+                    pauseScreen.SetActive(false);
+                    Time.timeScale = 1;
+                }
+            } else if (Input.GetMouseButtonDown(0))
             {
-                pausedText.gameObject.SetActive(false);
-                pauseScreen.SetActive(false);
-                Time.timeScale = 1;
+                Debug.Log("mouse down");
+                mouseTrail.SetActive(true);
+                mouseTrail.GetComponent<Trailing>().OnActive();
+            } else if (Input.GetMouseButtonUp(0))
+            {
+                Debug.Log("mouse up");
+                mouseTrail.SetActive(false);
             }
         }
     }
